@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Link, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Link, Switch, Route, Redirect } from 'react-router-dom';
 import HomePage from './pages/Home';
 import LoginPage from './pages/Login';
 import ProfilePage from './pages/Profile';
@@ -53,6 +53,10 @@ class App extends Component {
 
               <Route exact path="/login">
                 <LoginPage />
+              </Route>
+
+              <Route path="*">
+                  <Redirect to="/" />
               </Route>
           </Switch>
         </main>
