@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Link, Switch, Route, Redirect } from 'react-router-dom';
+import PrivateRoute from './component/PrivateRoute';
 import HomePage from './pages/Home';
 import LoginPage from './pages/Login';
 import ProfilePage from './pages/Profile';
+import DocsPage from './pages/DocsPage';
 import './App.css';
-import PrivateRoute from './component/PrivateRoute';
 
 class App extends Component {
 
@@ -40,16 +41,16 @@ class App extends Component {
 
         <main>
           <Switch>
-              <Route exact path="/">
-                <HomePage />
+              <Route exact path="/" component={HomePage} />
+
+              <Route exact path="/docs">
+                <DocsPage />
               </Route>
 
               <PrivateRoute
-                route={{ exact: true, path: "/profile" }}
+                route={{ exact: true, path: "/profile", component: ProfilePage }}
                 auth={this.state.user}
-              >
-                <ProfilePage />
-              </PrivateRoute>
+              />
 
               <Route exact path="/login">
                 <LoginPage />

@@ -1,8 +1,13 @@
 import React from 'react'
+import WelcomeSection from './WelcomeSection';
+import AbstractSection from './AbstractSection';
 
-function HomePage() {
+function HomePage(props) {
   return (
-    <div>HomePage</div>
+    <div>
+      <WelcomeSection />
+      <AbstractSection />
+    </div>
   )
 }
 
