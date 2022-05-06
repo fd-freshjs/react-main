@@ -1,0 +1,16 @@
+.docsHeading {
+    color: blue;
+}
+
+.list {
+    list-style-type: disc;
+    font-size: larger;
+
+    li {
+        color: green;
+
+        a {
+            text-decoration: none;
+        }
+    }
+}

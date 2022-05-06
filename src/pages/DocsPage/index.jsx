@@ -1,10 +1,12 @@
-import React from 'react'
+import React from 'react';
 import { Link } from 'react-router-dom';
+import cx from 'classnames';
+import classNames from './DocsPage.module.scss';
 
-function DocsPage() {
+function DocsPage(props) {
   return (
     <div>
-        <h1>
+        <h1 className={classNames.docsHeading}>
             Начало работы
         </h1>
         <p className="mainDescription">На этой странице мы сделаем небольшой обзор документации и других ресурсов, которые могут пригодиться при первом использовании React.</p>
@@ -12,7 +14,7 @@ function DocsPage() {
 
         <hr />
 
-        <ul>
+        <ul className={cx(classNames.list, { [classNames.special]: props.verdict })}>
             <li><a href="https://ru.reactjs.org/">Пробуем React</a></li>
             <li><a href="https://ru.reactjs.org/">Изучаем React</a></li>
             <li><a href="https://ru.reactjs.org/">Информация о релизах</a></li>
@@ -22,7 +24,7 @@ function DocsPage() {
 
         <hr />
 
-        <h2>Пробуем React</h2>
+        <h3>Пробуем React</h3>
         <p>React изначально был спроектирован так, чтобы его можно было внедрять постепенно. Другими словами, <b>вы можете начать с малого и использовать только ту функциональность React, которая необходима вам в данный момент.</b> Информация в этом разделе будет полезна в любой ситуации: при первом знакомстве с React, при создании простой динамической HTML-страницы и даже при проектировании сложного React-приложения.</p>
     </div>
   )

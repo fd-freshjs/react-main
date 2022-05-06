@@ -5,7 +5,7 @@ import HomePage from './pages/Home';
 import LoginPage from './pages/Login';
 import ProfilePage from './pages/Profile';
 import DocsPage from './pages/DocsPage';
-import './App.css';
+import './App.scss';
 
 class App extends Component {
 
