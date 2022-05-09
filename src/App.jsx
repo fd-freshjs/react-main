@@ -49,21 +49,23 @@ class App extends Component {
               <Route exact path="/" component={HomePage} />
 
               <Route exact path="/docs">
-                <DocsPage />
+                {(props) =>  {
+                    return <DocsPage />
+                  }}
               </Route>
 
               <Route exact path="/calc">
-                <Calculator />
+                <Calculator scale="km" />
+              </Route>
+
+              <Route exact path="/login">
+                <LoginPage />
               </Route>
 
               <PrivateRoute
                 route={{ exact: true, path: "/profile", component: ProfilePage }}
                 auth={this.state.user}
               />
-
-              <Route exact path="/login">
-                <LoginPage />
-              </Route>
 
               <Route path="*">
                   <Redirect to="/" />
