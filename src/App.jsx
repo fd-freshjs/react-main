@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Link, Switch, Route, Redirect } from 'react-router-dom';
+
 import PrivateRoute from './component/PrivateRoute';
 import HomePage from './pages/Home';
 import LoginPage from './pages/Login';
 import ProfilePage from './pages/Profile';
 import DocsPage from './pages/DocsPage';
 import './App.scss';
+import Calculator from './pages/Calculator';
 
 class App extends Component {
 
@@ -22,18 +24,21 @@ class App extends Component {
       <BrowserRouter>
 
         <header>
-          <Link to="/">
-            <img src="/logo192.png" alt="logo" width="50" />
-          </Link>
+            <Link to="/">
+                  <img src="/logo192.png" alt="logo" width="50" />
+            </Link>
 
           <nav>
             <ul>
               <li>
-                {this.state.user ? (
-                  <Link to="/profile">Profile</Link>
-                ) : (
-                  <Link to="/login">Login</Link>
-                )}
+                  {this.state.user ? (
+                    <Link to="/profile">Profile</Link>
+                  ) : (
+                    <Link to="/login">Login</Link>
+                  )}
+              </li>
+              <li>
+                <Link to="/calc">Calculator</Link>
               </li>
             </ul>
           </nav>
@@ -45,6 +50,10 @@ class App extends Component {
 
               <Route exact path="/docs">
                 <DocsPage />
+              </Route>
+
+              <Route exact path="/calc">
+                <Calculator />
               </Route>
 
               <PrivateRoute
