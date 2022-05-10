@@ -8,6 +8,7 @@ import ProfilePage from './pages/Profile';
 import DocsPage from './pages/DocsPage';
 import './App.scss';
 import Calculator from './pages/Calculator';
+import Counter from './pages/Counter';
 
 class App extends Component {
 
@@ -40,6 +41,9 @@ class App extends Component {
               <li>
                 <Link to="/calc">Calculator</Link>
               </li>
+              <li>
+                <Link to="/counter">Counter</Link>
+              </li>
             </ul>
           </nav>
         </header>
@@ -52,6 +56,10 @@ class App extends Component {
                 {(props) =>  {
                     return <DocsPage />
                   }}
+              </Route>
+
+              <Route exact path="/counter">
+                <Counter />
               </Route>
 
               <Route exact path="/calc">
