@@ -24,6 +24,9 @@ class FormControl extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
+
+    // validate this.props.validationSchema
+
     this.props.onSubmit(this.state);
   }
 

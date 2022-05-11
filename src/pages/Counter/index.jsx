@@ -38,4 +38,12 @@ class Counter extends Component {
   }
 }
 
+Counter.propTypes = {
+  
+}
+
+Counter.defaultProps = {
+  
+}
+
 export default Counter;

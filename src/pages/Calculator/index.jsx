@@ -33,7 +33,7 @@ export default class Calculator extends Component {
     }
 
     return (
-      <div>
+      <>
         <Input
           type="number"
           placeholder="Miles per hour"
@@ -50,7 +50,7 @@ export default class Calculator extends Component {
           value={String(km)}
           onChange={this.changeValue}
         />
-      </div>
+      </>
     );
   }
 }
