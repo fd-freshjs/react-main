@@ -10,6 +10,7 @@ import './App.scss';
 import { LangContext, UserContext } from './contexts';
 
 const LoginPage = lazy(() => import('./pages/Login'));
+const RegisterPage = lazy(() => import('./pages/Registration'));
 const Counter = lazy(() => import('./pages/Counter'));
 const Calculator = lazy(() => import('./pages/Calculator'));
 
@@ -18,7 +19,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      user: { firstName: 'Ihor' },
+      user: null,
       lang: 'en',
     };
   }
@@ -51,7 +52,10 @@ class App extends Component {
                     {this.state.user ? (
                       <Link to='/profile'>Profile</Link>
                     ) : (
-                      <Link to='/login'>Login</Link>
+                      <>
+                        <Link to='/login'>Login</Link>
+                        <Link to='/register'>Register</Link>
+                      </>
                     )}
                   </li>
                   <li>
@@ -64,40 +68,44 @@ class App extends Component {
               </nav>
             </header>
 
-            <main id="main">
-              <Switch>
-                <Route exact path='/' component={HomePage} />
+            <Suspense fallback={<CircularProgress />}>
+              <main id="main">
+                <Switch>
+                  <Route exact path='/' component={HomePage} />
 
-                <Route exact path='/docs'>
-                  {props => {
-                    return <DocsPage history={props.history} />;
-                  }}
-                </Route>
+                  <Route exact path='/docs'>
+                    {props => {
+                      return <DocsPage history={props.history} />;
+                    }}
+                  </Route>
 
-                <Route exact path='/counter'>
-                  <Counter />
-                </Route>
+                  <Route exact path='/counter'>
+                    <Counter />
+                  </Route>
 
-                <Route exact path='/calc'>
-                  <Calculator scale='km' />
-                </Route>
+                  <Route exact path='/calc'>
+                    <Calculator scale='km' />
+                  </Route>
 
-                <Route exact path='/login'>
-                  <Suspense fallback={<CircularProgress />}>
+                  <Route exact path='/login'>
                     <LoginPage />
-                  </Suspense>
-                </Route>
+                  </Route>
 
-                <PrivateRoute
-                  route={{ exact: true, path: '/profile', component: ProfilePage }}
-                  auth={this.state.user}
-                />
+                  <Route exace path="/register">
+                    <RegisterPage />
+                  </Route>
 
-                <Route path='*'>
-                  <Redirect to='/' />
-                </Route>
-              </Switch>
-            </main>
+                  <PrivateRoute
+                    route={{ exact: true, path: '/profile', component: ProfilePage }}
+                    auth={this.state.user}
+                  />
+
+                  <Route path='*'>
+                    <Redirect to='/' />
+                  </Route>
+                </Switch>
+              </main>
+            </Suspense>
           </UserContext.Provider>
         </LangContext.Provider>
       </BrowserRouter>

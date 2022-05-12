@@ -1,0 +1,17 @@
+.error {
+    border: 1px solid red;
+}
+
+.inputWrapper {
+    position: relative;
+}
+
+.errorLabel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 2px);
+
+    color: white;
+    background-color: coral;
+}

@@ -22,7 +22,7 @@ class FormControl extends Component {
     }));
   }
 
-  onSubmit = (e) => {
+  handleSubmit = (e) => {
     e.preventDefault();
 
     // validate this.props.validationSchema
@@ -35,7 +35,7 @@ class FormControl extends Component {
     const Form = this.props.component;
 
     return (
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={this.handleSubmit}>
 
         <Form {...renderProps} />
 
