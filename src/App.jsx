@@ -70,7 +70,7 @@ class App extends Component {
 
                 <Route exact path='/docs'>
                   {props => {
-                    return <DocsPage />;
+                    return <DocsPage history={props.history} />;
                   }}
                 </Route>
 
