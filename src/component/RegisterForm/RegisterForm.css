@@ -3,6 +3,9 @@
 }
 
 .inputWrapper {
+    display: block;
+    width: max-content;
+    margin-bottom: 25px;
     position: relative;
 }
 
@@ -10,7 +13,7 @@
     position: absolute;
     left: 0;
     right: 0;
-    top: calc(100% + 2px);
+    top: calc(100%);
 
     color: white;
     background-color: coral;

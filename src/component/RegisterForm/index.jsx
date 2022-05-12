@@ -4,10 +4,17 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import './RegisterForm.css';
 
 const regiterSchema = yup.object().shape({
-  name: yup.string().required(),
-  email: yup.string().email().required().matches(/^[\w]*$/),
-  password: yup.string().required(),
-  confPassword: yup.string().required().oneOf([yup.ref("password")]),
+  name: yup.string().required('Required field'),
+  email: yup
+    .string()
+    .email()
+    .required('Required field')
+    .matches(/^[\w]*$/),
+  password: yup.string().required('Required field'),
+  confPassword: yup
+    .string()
+    .required('Required field')
+    .oneOf([yup.ref('password')]),
 });
 
 function RegisterForm () {
@@ -30,34 +37,72 @@ function RegisterForm () {
     <Formik
       initialValues={initialValues}
       onSubmit={handleSubmit}
-      // validate
+      // validate={function() { return errorObj; }}
       validationSchema={regiterSchema}
     >
-      {
-        (settings) => {
-          const { errors } = settings;
+      {settings => {
+        const { errors } = settings;
 
-          return (
-            <Form>
-              <label className="inputWrapper">
-                <Field className={errors.name ? "error" : ""} name="name" placeholder="Name" />
-                <ErrorMessage className="errorLabel" name="name" component="div" />
-              </label>
+        return (
+          <Form>
+            <label className='inputWrapper'>
+              <Field
+                className={errors.name ? 'error' : ''}
+                name='name'
+                placeholder='Name'
+              />
+              <ErrorMessage
+                className='errorLabel'
+                name='name'
+                component='div'
+              />
+            </label>
 
-              <Field className={errors.email ? "error" : ""} name="email" placeholder="Email" />
-              <ErrorMessage name="email"  component="div" />
+            <label className='inputWrapper'>
+              <Field
+                className={errors.email ? 'error' : ''}
+                name='email'
+                placeholder='Email'
+              />
+              <ErrorMessage
+                className='errorLabel'
+                name='email'
+                component='div'
+              />
+            </label>
 
-              <Field type="password" name="password" placeholder="Password" />
-              <ErrorMessage name="password"  component="div" />
+            <label className='inputWrapper'>
+              <Field
+                className={errors.email ? 'error' : ''}
+                type='password'
+                name='password'
+                placeholder='Password'
+              />
+              <ErrorMessage
+                className='errorLabel'
+                name='password'
+                component='div'
+              />
+            </label>
 
-              <Field type="password" name="confPassword" placeholder="Confirm password" />
-              <ErrorMessage name="confPassword"  component="div" />
+            <label className='inputWrapper'>
+              <Field
+                className={errors.email ? 'error' : ''}
+                type='password'
+                name='confPassword'
+                placeholder='Confirm password'
+              />
+              <ErrorMessage
+                className='errorLabel'
+                name='confPassword'
+                component='div'
+              />
+            </label>
 
-              <button type="submit">Send</button>
-            </Form>
-          );
-        }
-      }
+            <button type='submit'>Send</button>
+          </Form>
+        );
+      }}
     </Formik>
   );
 }
