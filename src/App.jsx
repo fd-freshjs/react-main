@@ -8,6 +8,7 @@ import ProfilePage from './pages/Profile';
 import DocsPage from './pages/DocsPage';
 import './App.scss';
 import { LangContext, UserContext } from './contexts';
+import UserLoader from './pages/UserLoader';
 
 const LoginPage = lazy(() => import('./pages/Login'));
 const RegisterPage = lazy(() => import('./pages/Registration'));
@@ -64,6 +65,9 @@ class App extends Component {
                   <li>
                     <Link to='/counter'>Counter</Link>
                   </li>
+                  <li>
+                    <Link to='/users'>Users</Link>
+                  </li>
                 </ul>
               </nav>
             </header>
@@ -93,6 +97,10 @@ class App extends Component {
 
                   <Route exace path="/register">
                     <RegisterPage />
+                  </Route>
+
+                  <Route exact path="/users">
+                    <UserLoader />
                   </Route>
 
                   <PrivateRoute
