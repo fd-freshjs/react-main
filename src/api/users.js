@@ -15,3 +15,19 @@ export const fetchUsers = async (page) => {
 
   return response.data;
 }
+
+export const register = async (payload) => {
+  const response = await axios.post('http://localhost:5000/users', payload);
+
+  console.log(response.data);
+}
+
+export const login = async (payload) => {
+  const id = 1;
+  const response = await axios.get('http://localhost:5000/users/' + id);
+
+  // сравнить пароли
+  // в будущем это будет делать сервер
+
+  console.log(response.data);
+}

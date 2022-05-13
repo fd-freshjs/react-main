@@ -2,15 +2,15 @@ import React from 'react';
 import * as yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import './RegisterForm.css';
+import { register } from '../../api/users';
 
 const regiterSchema = yup.object().shape({
   name: yup.string().required('Required field'),
   email: yup
     .string()
     .email()
-    .required('Required field')
-    .matches(/^[\w]*$/),
-  password: yup.string().required('Required field'),
+    .required('Required field'),
+  password: yup.string().required('Required field').matches(/^[\w]*$/),
   confPassword: yup
     .string()
     .required('Required field')
@@ -31,6 +31,8 @@ function RegisterForm () {
 
     // do smth
     console.log(data);
+    // do post request
+    register(data);
   };
 
   return (
