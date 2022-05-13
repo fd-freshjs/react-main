@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const fetchTemplate = (path, onSuccess, onError, onFinally) => 
   fetch(
     path
@@ -7,10 +9,9 @@ export const fetchTemplate = (path, onSuccess, onError, onFinally) =>
   .finally(onFinally);
 
 export const fetchUsers = async (page) => {
-  const response = await fetch(
+  const response = await axios.get(
     `https://randomuser.me/api/?results=10&seed=freshcode&page=${page}`,
   );
-  const data = await response.json();
 
-  return data;
+  return response.data;
 }
