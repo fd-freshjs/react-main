@@ -17,22 +17,19 @@ class UserLoader extends Component {
     this.loadUsers();
   }
 
-  loadUsers = () => {
+  loadUsers = async () => {
     const { page } = this.state;
 
-    this.setState({ isLoading: true });
-
-    fetchUsers(page,
-      (data) => {
-        this.setState({ users: data.results, error: null });
-      },
-      (e) => {
-        this.setState({ error: e });
-      },
-      () => {
-        this.setState({ isLoading: false });
-      }
-    );
+    try {
+      this.setState((state) => ({ ...state, isLoading: true }));
+  
+      const users = await fetchUsers(page);
+      this.setState((state) => ({ ...state, users, error: null }));
+    } catch (error) {
+      this.setState((state) => ({ ...state, error }));
+    } finally {
+      this.setState((state) => ({ ...state, isLoading: false }));
+    }
   }
 
   render () {
