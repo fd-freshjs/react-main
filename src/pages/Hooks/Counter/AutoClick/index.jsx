@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
 function AutoClick (props) {
-  const [isDidMount, setDidMount] = useState(true);
   const [timerId, setTimerId] = useState(null);
   const startAuto = () => {
     if (timerId === null) {
@@ -25,16 +24,12 @@ function AutoClick (props) {
     startAuto();
   }, []);
 
-  // didmount + didupdate
+  // didmount + didupdate (timerId)
   useEffect(() => {
-    if (isDidMount) {
-      setDidMount(false);
-      // сделать что то только на монтирование
+      // сделать что то на монтирование
       console.log('mount');
-    } else {
-      // сделать что то только на обновление
+      // сделать что то на обновление timerId
       console.log('didupdate');
-    }
   }, [timerId]);
 
   console.log('render');
