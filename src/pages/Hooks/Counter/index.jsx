@@ -13,7 +13,7 @@ function Counter () {
     setCount(oldCount => oldCount - step);
   };
 
-  const [tasks, setTasks] = useState([]);
+  const [render, setRender] = useState(true);
 
   return (
     <div>
@@ -21,20 +21,15 @@ function Counter () {
       <div>
         <button onClick={
           () => {
-            setTasks((tasks) => {
-              const newTasks = [...tasks, Math.random()];
-              // mutate
-              return newTasks;
-            });
+            setRender((oldRender) => !oldRender);
           }
-        }>Добавить таску</button>
-        <div>Tasks: {tasks}</div>
+        }>Переключить рендер</button>
         <div>{count}</div>
         <div>
           <button onClick={increase}>Добавить 1</button>
           <button onClick={decrease}>Отнять 1</button>
         </div>
-        <AutoClick action={increase} />
+        {render && <AutoClick action={increase} />}
 
         <StepControl
           value={step}

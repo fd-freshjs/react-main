@@ -13,24 +13,24 @@ function AutoClick (props) {
     setTimerId(null);
   };
 
-
-  // didmount + didupdate
-  useEffect(() => {
-    document.title = `Автокликер ${timerId === null ? 'остановлен' : 'запущен'}`
-  });
-
   // didmount
   useEffect(() => {
+    console.log('mount 1');
     startAuto();
+
+    return () => {
+      console.log('unmount 1');
+      stopAuto();
+    };
   }, []);
 
-  // didmount + didupdate (timerId)
   useEffect(() => {
-      // сделать что то на монтирование
-      console.log('mount');
-      // сделать что то на обновление timerId
-      console.log('didupdate');
-  }, [timerId]);
+    console.log('mount 2');
+
+    return () => {
+      console.log('unmount 2');
+    };
+  }, []);
 
   console.log('render');
   return (
