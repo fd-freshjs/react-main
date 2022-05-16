@@ -35,6 +35,7 @@ function Counter () {
           <button onClick={decrease}>Отнять 1</button>
         </div>
         <AutoClick action={increase} />
+
         <StepControl
           value={step}
           onChange={e => {
