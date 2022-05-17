@@ -1,10 +1,15 @@
 import React from 'react';
-import Counter from './Counter';
+import StopWatch from '../../component/StopWatch';
 
 // на хуках потренироваться сделать слайдер < num >
 
 function HooksPage (props) {
-  return <Counter />
+  return (
+    <div>
+      {/* <Counter /> */}
+      <StopWatch />
+    </div>
+  );
 }
 
 export default HooksPage;
