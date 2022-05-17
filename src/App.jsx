@@ -3,14 +3,16 @@ import { BrowserRouter, Link, Switch, Route, Redirect } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
 
 import PrivateRoute from './component/PrivateRoute';
+
+import { LangContext, UserContext, ThemeContext } from './contexts';
+import { langEnum, themeEnum } from './enums';
+import './App.scss';
+
 import HomePage from './pages/Home';
 import ProfilePage from './pages/Profile';
 import DocsPage from './pages/DocsPage';
-import './App.scss';
-import { LangContext, UserContext } from './contexts';
 import UserLoader from './pages/UserLoader';
 import HooksPage from './pages/Hooks';
-
 const LoginPage = lazy(() => import('./pages/Login'));
 const RegisterPage = lazy(() => import('./pages/Registration'));
 const Counter = lazy(() => import('./pages/Counter'));
@@ -22,8 +24,24 @@ class App extends Component {
 
     this.state = {
       user: null,
-      lang: 'en',
+      lang: langEnum[0],
+      theme: themeEnum.LIGHT,
     };
+  }
+
+  nextTheme = () => {
+    this.setState(state => {
+
+      // const nextTheme = state.theme === themeEnum.DARK ? themeEnum.LIGHT : themeEnum.DARK;
+      const themes = Object.entries(themeEnum);
+      const currentThemeIndex = themes.findIndex(([key, value]) => value === state.theme);
+      const nextTheme = themes[(currentThemeIndex + 1) % themes.length];
+
+      return {
+        ...state,
+        theme: nextTheme[1],
+      }
+    });
   }
 
   setUser = () => {
@@ -35,7 +53,7 @@ class App extends Component {
   }
 
   render () {
-    const { user, lang } = this.state;
+    const { user, lang, theme } = this.state;
 
     return (
       <BrowserRouter>
@@ -43,85 +61,87 @@ class App extends Component {
         <button onClick={this.setUser}>Change User</button>
         <LangContext.Provider value={lang}>
           <UserContext.Provider value={user}>
-            <header>
-              <Link to='/'>
-                <img src='/logo192.png' alt='logo' width='50' />
-              </Link>
+            <ThemeContext.Provider value={[theme, this.nextTheme]}>
+              <header>
+                <Link to='/'>
+                  <img src='/logo192.png' alt='logo' width='50' />
+                </Link>
 
-              <nav>
-                <ul>
-                  <li>
-                    {this.state.user ? (
-                      <Link to='/profile'>Profile</Link>
-                    ) : (
-                      <>
-                        <Link to='/login'>Login</Link>
-                        <Link to='/register'>Register</Link>
-                      </>
-                    )}
-                  </li>
-                  <li>
-                    <Link to='/calc'>Calculator</Link>
-                  </li>
-                  <li>
-                    <Link to='/counter'>Counter</Link>
-                  </li>
-                  <li>
-                    <Link to='/hooks'>Hooks</Link>
-                  </li>
-                  <li>
-                    <Link to='/users'>Users</Link>
-                  </li>
-                </ul>
-              </nav>
-            </header>
+                <nav>
+                  <ul>
+                    <li>
+                      {this.state.user ? (
+                        <Link to='/profile'>Profile</Link>
+                      ) : (
+                        <>
+                          <Link to='/login'>Login</Link>
+                          <Link to='/register'>Register</Link>
+                        </>
+                      )}
+                    </li>
+                    <li>
+                      <Link to='/calc'>Calculator</Link>
+                    </li>
+                    <li>
+                      <Link to='/counter'>Counter</Link>
+                    </li>
+                    <li>
+                      <Link to='/hooks'>Hooks</Link>
+                    </li>
+                    <li>
+                      <Link to='/users'>Users</Link>
+                    </li>
+                  </ul>
+                </nav>
+              </header>
 
-            <Suspense fallback={<CircularProgress />}>
-              <main id="main">
-                <Switch>
-                  <Route exact path='/' component={HomePage} />
+              <Suspense fallback={<CircularProgress />}>
+                <main id="main">
+                  <Switch>
+                    <Route exact path='/' component={HomePage} />
 
-                  <Route exact path='/docs'>
-                    {props => {
-                      return <DocsPage history={props.history} />;
-                    }}
-                  </Route>
+                    <Route exact path='/docs'>
+                      {props => {
+                        return <DocsPage history={props.history} />;
+                      }}
+                    </Route>
 
-                  <Route exact path='/counter'>
-                    <Counter />
-                  </Route>
+                    <Route exact path='/counter'>
+                      <Counter />
+                    </Route>
 
-                  <Route exact path='/hooks'>
-                    <HooksPage />
-                  </Route>
+                    <Route exact path='/hooks'>
+                      <HooksPage />
+                    </Route>
 
-                  <Route exact path='/calc'>
-                    <Calculator scale='km' />
-                  </Route>
+                    <Route exact path='/calc'>
+                      <Calculator scale='km' />
+                    </Route>
 
-                  <Route exact path='/login'>
-                    <LoginPage />
-                  </Route>
+                    <Route exact path='/login'>
+                      <LoginPage />
+                    </Route>
 
-                  <Route exace path="/register">
-                    <RegisterPage />
-                  </Route>
+                    <Route exace path="/register">
+                      <RegisterPage />
+                    </Route>
 
-                  <Route exact path="/users">
-                    <UserLoader />
-                  </Route>
+                    <Route exact path="/users">
+                      <UserLoader />
+                    </Route>
 
-                  <PrivateRoute
-                    route={{ exact: true, path: '/profile', component: ProfilePage }}
-                    auth={this.state.user}
-                  />
+                    <PrivateRoute
+                      route={{ exact: true, path: '/profile', component: ProfilePage }}
+                      auth={this.state.user}
+                    />
 
-                  <Route path='*'>
-                    <Redirect to='/' />
-                  </Route>
-                </Switch>
-              </main>
-            </Suspense>
+                    <Route path='*'>
+                      <Redirect to='/' />
+                    </Route>
+                  </Switch>
+                </main>
+              </Suspense>
+            </ThemeContext.Provider>
           </UserContext.Provider>
         </LangContext.Provider>
       </BrowserRouter>
