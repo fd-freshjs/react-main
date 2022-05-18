@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 function AutoClick (props) {
-  const [timerId, setTimerId] = useState(null);
+  const timerIdRef = useRef(null);
 
   const startAuto = () => {
-    if (timerId === null) {
+    if (timerIdRef.current === null) {
       const id = setInterval(props.action, 1000);
-      setTimerId(id);
+      timerIdRef.current = id;
     }
   };
   const stopAuto = () => {
-    clearInterval(timerId);
-    setTimerId(null);
+    clearInterval(timerIdRef.current);
+    timerIdRef.current = null;
   };
 
   useEffect(() => {
@@ -25,7 +25,6 @@ function AutoClick (props) {
       stopAuto();
     };
   }, []);
-
 
   const [trigger, setTrigger] = useState(true);
   useEffect(() => {

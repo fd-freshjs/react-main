@@ -1,56 +1,45 @@
-import React, { Component } from 'react';
+import React, { useMemo, useState } from 'react';
 import Input from '../../component/Input';
 
-export default class Calculator extends Component {
-  constructor(props) {
-    super(props);
+function Calculator () {
+  const [value, setValue] = useState(0);
+  const [scale, setScale] = useState('km');
 
-    this.state = {
-      value: '',
-      scale: 'km',
-    };
-  }
-
-  changeValue = (name, newValue) => {
-    this.setState((state) => {
-      return {
-        ...state,
-        value: Number(newValue),
-        scale: name,
-      };
-    });
+  const changeValue = (name, newValue) => {
+    setValue(Number(newValue));
+    setScale(name);
   };
 
-  render() {
-    const { value, scale } = this.state;
-    let mile = value;
-    let km = value;
+  // let mile = value;
+  // let km = value;
 
-    if (scale === 'km' && typeof value === 'number') {
-      mile = value * 0.621;
-    } else if (scale === 'mile' && typeof value === 'number') {
-      km = value * 1.609;
-    }
+  // if (scale === 'km') {
+  //   mile = value * 0.621;
+  // } else if (scale === 'mile') {
+  //   km = value * 1.609;
+  // }
 
-    return (
-      <>
-        <Input
-          type="number"
-          placeholder="Miles per hour"
-          name="mile"
-          value={String(mile)}
-          onChange={this.changeValue}
-        >
-          Test
-        </Input>
-        <Input
-          type="number"
-          placeholder="Kilometers per hour"
-          name="km"
-          value={String(km)}
-          onChange={this.changeValue}
-        />
-      </>
-    );
-  }
+  const mile = useMemo(() => scale === 'km' ? Number(value) * 0.621 : value, [value, scale]);
+  const km = useMemo(() => scale === 'mile' ? Number(value) * 1.609 : value, [value, scale]);
+
+  return <>
+    <Input
+      type="number"
+      placeholder="Miles per hour"
+      name="mile"
+      value={mile}
+      onChange={changeValue}
+    >
+      Test
+    </Input>
+    <Input
+      type="number"
+      placeholder="Kilometers per hour"
+      name="km"
+      value={km}
+      onChange={changeValue}
+    />
+  </>;
 }
+
+export default Calculator;
