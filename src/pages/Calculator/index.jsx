@@ -1,28 +1,33 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Input from '../../component/Input';
 
-function Calculator () {
+function Calculator (props) {
+  const [trigger, setTrigger] = useState(false);
   const [value, setValue] = useState(0);
   const [scale, setScale] = useState('km');
 
-  const changeValue = (name, newValue) => {
+  const changeValue = useCallback((name, newValue) => {
     setValue(Number(newValue));
     setScale(name);
-  };
-
-  // let mile = value;
-  // let km = value;
-
-  // if (scale === 'km') {
-  //   mile = value * 0.621;
-  // } else if (scale === 'mile') {
-  //   km = value * 1.609;
-  // }
+  }, []);
 
   const mile = useMemo(() => scale === 'km' ? Number(value) * 0.621 : value, [value, scale]);
   const km = useMemo(() => scale === 'mile' ? Number(value) * 1.609 : value, [value, scale]);
 
+
+
+  const handleValueChange = useCallback(() => {
+    console.log('test');
+    // more code
+    localStorage.setItem('value', value);
+  }, [value]);
+
+  useEffect(() => {
+    handleValueChange();
+  }, [handleValueChange]);
+
   return <>
+    <button onClick={() => setTrigger(!trigger)}>Trigger</button>
     <Input
       type="number"
       placeholder="Miles per hour"

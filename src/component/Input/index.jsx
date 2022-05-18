@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-function Input(props) {
+function Input (props) {
 
   const { onChange: handleChange, children, ...rest } = props;
 
@@ -10,6 +10,10 @@ function Input(props) {
       // save
       handleChange(name, value);
   }
+
+  useEffect(() => {
+    console.log('handleChange()');
+  }, [handleChange]);
 
   return (
     <label>
