@@ -10,6 +10,10 @@ const text = {
 };
 
 function WelcomeSection () {
+  // const [store, dispatch] = useContext(StoreContext);
+
+  // const { user: { data }, lang, theme } = store;
+
   const lang = useContext(LangContext);
   const user = useContext(UserContext);
   const [theme, nextTheme] = useContext(ThemeContext);

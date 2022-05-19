@@ -13,6 +13,7 @@ import ProfilePage from './pages/Profile';
 import DocsPage from './pages/DocsPage';
 import UserLoader from './pages/UserLoader';
 import HooksPage from './pages/Hooks';
+import { StoreContext } from './app/store';
 const LoginPage = lazy(() => import('./pages/Login'));
 const RegisterPage = lazy(() => import('./pages/Registration'));
 const Counter = lazy(() => import('./pages/Counter'));
@@ -46,6 +47,8 @@ class App extends Component {
 
   setUser = () => {
     this.setState({ user: { firstName: Math.random() * 10 } });
+
+    // dispatch({ type: 'setUser', payload: { firstName: Math.random() * 10 } });
   }
 
   setLang = () => {
@@ -53,15 +56,14 @@ class App extends Component {
   }
 
   render () {
-    const { user, lang, theme } = this.state;
+    const { user } = this.state;
+    // const [store, dispatch] = useStore();
 
     return (
       <BrowserRouter>
         <button onClick={this.setLang}>Change Lang</button>
         <button onClick={this.setUser}>Change User</button>
-        <LangContext.Provider value={lang}>
-          <UserContext.Provider value={user}>
-            <ThemeContext.Provider value={[theme, this.nextTheme]}>
+        <StoreContext.Provider value={store}>
               <header>
                 <Link to='/'>
                   <img src='/logo192.png' alt='logo' width='50' />
@@ -70,7 +72,7 @@ class App extends Component {
                 <nav>
                   <ul>
                     <li>
-                      {this.state.user ? (
+                      {this.state.user ? ( // store.user.data
                         <Link to='/profile'>Profile</Link>
                       ) : (
                         <>
@@ -132,7 +134,7 @@ class App extends Component {
 
                     <PrivateRoute
                       route={{ exact: true, path: '/profile', component: ProfilePage }}
-                      auth={user}
+                      auth={user} // store.user.data
                     />
 
                     <Route path='*'>
@@ -141,9 +143,7 @@ class App extends Component {
                   </Switch>
                 </main>
               </Suspense>
-            </ThemeContext.Provider>
-          </UserContext.Provider>
-        </LangContext.Provider>
+        </StoreContext.Provider>
       </BrowserRouter>
     );
   }
