@@ -25,7 +25,13 @@ export const useForm = (initialState = {}) => {
     setFormState((s) => ({ ...s, [name]: value }));
   };
 
-  return [formState, onInputChange];
+  const resetField = (field = '') => {
+    if (field) {
+      onInputChange({ target: { name: field, value: initialState[field] } });
+    }
+  }
+
+  return [formState, onInputChange, resetField];
 };
 
 export const useFetch = (promise, initialState = {}, deps = []) => {

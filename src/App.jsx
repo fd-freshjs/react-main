@@ -132,7 +132,7 @@ class App extends Component {
 
                     <PrivateRoute
                       route={{ exact: true, path: '/profile', component: ProfilePage }}
-                      auth={this.state.user}
+                      auth={user}
                     />
 
                     <Route path='*'>

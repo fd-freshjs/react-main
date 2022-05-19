@@ -5,9 +5,11 @@ function Todo () {
   // ячейка это обьект
   const [tasks, addTask, deleteTask] = useTasks([]);
 
-  const [formState, onInputChange] = useForm({ task: '' });
-  const onSubmit = () => {
+  const [formState, onInputChange, resetField] = useForm({ task: '' });
+  const onSubmit = (e) => {
+    e.preventDefault();
     addTask({ text: formState.task, id: Math.random() * 2000 });
+    resetField('task');
   };
   // если массив задач меняеся то записать его в localStorage
   // а при монтировании читать задачи из localStorage
@@ -31,11 +33,11 @@ function Todo () {
             /* component TaskItem */
             <li key={task.id}>
               {task.text}{' '}
-              <span onClick={() => deleteTask(task.id)}>
+              <span style={{ cursor: 'pointer' }} onClick={() => deleteTask(task.id)}>
                 <svg
                   width='24'
                   height='24'
-                  style={{ color: 'white' }}
+                  style={{ color: 'black' }}
                   viewBox='0 0 24 24'
                 >
                   <path
