@@ -1,17 +1,10 @@
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import AutoClick from './AutoClick';
+import counterReducer, { initialState } from './reducer';
 import StepControl from './StepControl';
 
 function Counter () {
-  const [count, setCount] = useState(0);
-  const [step, setStep] = useState(1);
-  
-  const increase = () => {
-    setCount(oldCount => oldCount + 1);
-  };
-  const decrease = () => {
-    setCount(oldCount => oldCount - step);
-  };
+  const [state, dispatch] = useReducer(counterReducer, initialState);
 
   const [render, setRender] = useState(true);
 
@@ -24,18 +17,19 @@ function Counter () {
             setRender((oldRender) => !oldRender);
           }
         }>Переключить рендер</button>
-        <div>{count}</div>
+        <div>{state.count}</div>
         <div>
-          <button onClick={increase}>Добавить 1</button>
-          <button onClick={decrease}>Отнять 1</button>
+          <button onClick={() => dispatch({ group: 'counter', type: 'increase'})}>Добавить 1</button>
+          <button onClick={() => dispatch({ group: 'counter', type: 'decrease'})}>Отнять 1</button>
         </div>
-        {render && <AutoClick action={increase} />}
+        {render && <AutoClick action={() => dispatch({ group: 'counter', type: 'increase'})} />}
 
         <StepControl
-          value={step}
+          value={state.step}
           onChange={e => {
             const value = e.target.value;
-            setStep(Number(value));
+
+            dispatch({ group: 'step', type: 'setStep', payload: Number(value) });
           }}
         />
       </div>
