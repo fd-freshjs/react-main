@@ -1,25 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useForm, useTasks } from '../../hooks';
 
 function Todo () {
   // ячейка это обьект
-  const [tasksArr, setTasksArr] = useState([]);
-  const [todoValue, setTodoValue] = useState('');
+  const [tasks, addTask, deleteTask] = useTasks([]);
+
+  const [formState, onInputChange] = useForm({ task: '' });
   const onSubmit = () => {
-    setTasksArr((oldTasks) => );
+    addTask({ text: formState.task, id: Math.random() * 2000 });
   };
-  const onInputChange = ({ target: { value } }) => {
-    // e.target.value === { target: { value } }
-    setTodoValue(value);
-  };
-
-  const deleteTask = (id) => {
-    setTasksArr((oldTasks) => {
-      const newTasks = oldTasks.filter((t) => t.id !== id);
-
-      return newTasks;
-    });
-  };
-
   // если массив задач меняеся то записать его в localStorage
   // а при монтировании читать задачи из localStorage
 
@@ -27,22 +16,26 @@ function Todo () {
     <div>
       {/* component AddTask */}
       <form onSubmit={onSubmit}>
-        <input type='text' value={todoValue} onChange={onInputChange} />
+        <input
+          name='task'
+          type='text'
+          value={formState.task}
+          onChange={onInputChange}
+        />
         <button type='submit'>Add todo</button>
       </form>
 
       <ul>
-        {tasksArr.map(task => {
+        {tasks.map(task => {
           return (
             /* component TaskItem */
-            <li key={}>
+            <li key={task.id}>
               {task.text}{' '}
-              <span onClick={() => deleteTask(id)}>
+              <span onClick={() => deleteTask(task.id)}>
                 <svg
                   width='24'
                   height='24'
                   style={{ color: 'white' }}
-
                   viewBox='0 0 24 24'
                 >
                   <path

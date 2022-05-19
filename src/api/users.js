@@ -31,3 +31,13 @@ export const login = async (payload) => {
 
   console.log(response.data);
 }
+
+export const loadProfile = async (userId) => {
+  const response = await axios.get(`http://localhost:5000/profile`, {
+    params: {
+      userId
+    },
+  });
+
+  return response.data;
+};
