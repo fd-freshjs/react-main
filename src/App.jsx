@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useContext } from 'react';
 import { BrowserRouter, Link, Switch, Route, Redirect } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
 
@@ -12,15 +12,19 @@ import ProfilePage from './pages/Profile';
 import DocsPage from './pages/DocsPage';
 import UserLoader from './pages/UserLoader';
 import HooksPage from './pages/Hooks';
+import { StoreContext } from './contexts';
 const LoginPage = lazy(() => import('./pages/Login'));
 const RegisterPage = lazy(() => import('./pages/Registration'));
 const Counter = lazy(() => import('./pages/Counter'));
 const Calculator = lazy(() => import('./pages/Calculator'));
 
 function App () {
-  // аналоги const [store, dispatch] = useContext(StoreContext);
-  const userState = useSelector(store => store.user);
-  const dispatch = useDispatch();
+  // аналоги 
+  // const userState = useSelector(store => store.user);
+  // const dispatch = useDispatch();
+  const [store, dispatch] = useContext(StoreContext);
+
+  const { user: userState } = store;
 
   const setUser = () => {
     dispatch({

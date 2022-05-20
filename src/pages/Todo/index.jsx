@@ -1,14 +1,38 @@
-import React from 'react';
-import { useForm, useTasks } from '../../hooks';
+import React, { useContext } from 'react';
+import { StoreContext } from '../../contexts';
+import { useForm } from '../../hooks';
+
+// типа отправка данных на сервер
+const send = async (data) => {
+  return new Promise((res, rej) => {
+    setTimeout(() => res(data), 400);
+  });
+}
 
 function Todo () {
+  const [store, dispatch] = useContext(StoreContext);
   // ячейка это обьект
-  const [tasks, addTask, deleteTask] = useTasks([]);
+  // const [tasks, addTask, deleteTask] = useTasks([]);
 
   const [formState, onInputChange, resetField] = useForm({ task: '' });
-  const onSubmit = (e) => {
+  const onSubmit = e => {
     e.preventDefault();
-    addTask({ text: formState.task, id: Math.random() * 2000 });
+    
+    send({ text: formState.task, id: Math.random() * 2000 })
+    .then((data) => {
+        // dispatch (action)
+        dispatch({
+          type: 'addTask',
+          payload: data,
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: 'addTaskError',
+          payload: error,
+        });
+      })
+    
     resetField('task');
   };
   // если массив задач меняеся то записать его в localStorage
@@ -28,12 +52,15 @@ function Todo () {
       </form>
 
       <ul>
-        {tasks.map(task => {
+        {store.tasks.map(task => {
           return (
             /* component TaskItem */
             <li key={task.id}>
               {task.text}{' '}
-              <span style={{ cursor: 'pointer' }} onClick={() => deleteTask(task.id)}>
+              <span
+                style={{ cursor: 'pointer' }}
+                onClick={() => dispatch({ type: 'deleteTask', payload: task.id })}
+              >
                 <svg
                   width='24'
                   height='24'
