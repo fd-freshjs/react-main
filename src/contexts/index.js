@@ -1,8 +1,7 @@
-import React from "react";
-import { langEnum, themeEnum } from '../enums';
+// import React from "react";
+// import { langEnum, themeEnum } from '../enums';
 
-export const UserContext = React.createContext({});
-
-export const ThemeContext = React.createContext(themeEnum.LIGHT);
-
-export const LangContext = React.createContext(langEnum[0]);
+// заменено на store context
+// export const UserContext = React.createContext({});
+// export const ThemeContext = React.createContext(themeEnum.LIGHT);
+// export const LangContext = React.createContext(langEnum.en);

@@ -1,10 +1,29 @@
-import { createContext, useReducer } from "react";
-import reducer, { globalStore } from "../reducers";
+import { createContext, useContext, useReducer } from "react";
+import globalReducer, { globalStore } from "../reducers";
 
 export const StoreContext = createContext(globalStore);
 
-export const useStore = () => {
-    const store = useReducer(reducer, globalStore)
+const Store = (props) => {
+    const store = useReducer(globalReducer, globalStore);
 
-    return store;
+    return <StoreContext.Provider value={store}>
+        {props.children}
+    </StoreContext.Provider>
 }
+
+export const useSelector = (func) => {
+    const [store] = useContext(StoreContext);
+    return func ? func(store) : store;
+}
+
+export const useDispatch = (func) => {
+    const [, dispatch] = useContext(StoreContext);
+    return dispatch;
+}
+
+export const useStore = (func) => {
+    const [store, dispatch] = useContext(StoreContext);
+    return [func ? func(store) : store, dispatch];
+}
+
+export default Store;
