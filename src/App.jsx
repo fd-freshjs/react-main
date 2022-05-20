@@ -34,9 +34,16 @@ function App () {
     });
   };
 
+  const nextLang = () => {
+    dispatch({
+      group: 'lang',
+      type: 'nextLang',
+    });
+  };
+
   return (
     <BrowserRouter>
-      {/* <button onClick={setLang}>Change Lang</button> */}
+      <button onClick={nextLang}>Change Lang</button>
       <button onClick={setUser}>Change User</button>
 
       <header>
