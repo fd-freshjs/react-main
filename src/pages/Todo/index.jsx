@@ -3,9 +3,9 @@ import { StoreContext } from '../../contexts';
 import { useForm } from '../../hooks';
 
 // типа отправка данных на сервер
-const send = async (data) => {
+const send = (data) => {
   return new Promise((res, rej) => {
-    setTimeout(() => res(data), 400);
+    setTimeout(() => Math.random() < 0.6 ? res(data) : rej(new Error('Cannot cerate task')), 2000);
   });
 }
 
@@ -17,9 +17,9 @@ function Todo () {
   const [formState, onInputChange, resetField] = useForm({ task: '' });
   const onSubmit = e => {
     e.preventDefault();
-    
-    send({ text: formState.task, id: Math.random() * 2000 })
-    .then((data) => {
+
+    /* send({ text: formState.task, id: Math.random() * 2000 })
+      .then((data) => {
         // dispatch (action)
         dispatch({
           type: 'addTask',
@@ -31,7 +31,29 @@ function Todo () {
           type: 'addTaskError',
           payload: error,
         });
-      })
+      }); */
+
+    async function sendAsync (payload) {
+      try {
+        const data = await send(payload);
+
+        dispatch({
+          group: 'tasks',
+          type: 'addTask',
+          payload: data,
+        });
+      } catch (error) {
+        console.error(error);
+
+        dispatch({
+          group: 'tasks',
+          type: 'addTaskError',
+          payload: error,
+        });
+      }
+    }
+    dispatch({ group: 'tasks', type: 'loadTasks' });
+    sendAsync({ text: formState.task, id: Math.random() * 2000 });
     
     resetField('task');
   };
@@ -49,10 +71,13 @@ function Todo () {
           onChange={onInputChange}
         />
         <button type='submit'>Add todo</button>
+        <span>{store.tasks.isLoading ? 'Loading' : ''}</span>
       </form>
 
+      <div>{store.tasks.error?.toString()}</div>
+
       <ul>
-        {store.tasks.map(task => {
+        {store.tasks.list.map(task => {
           return (
             /* component TaskItem */
             <li key={task.id}>

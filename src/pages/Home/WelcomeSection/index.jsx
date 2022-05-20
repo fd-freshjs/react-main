@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { StoreContext } from '../../../contexts';
-import { themeEnum } from '../../../enums';
+import { themeEnum, langEnum } from '../../../enums';
 import './WelcomeSection.css';
 
 const text = {
-  en: user => `Welcome, ${user ? user.firstName : 'Stranger'}`,
-  ru: user => `Добро пожаловать, ${user ? user.firstName : 'Незнакомец'}`,
+  [langEnum.en]: user => `Welcome, ${user ? user.firstName : 'Stranger'}`,
+  [langEnum.ru]: user => `Добро пожаловать, ${user ? user.firstName : 'Незнакомец'}`,
 };
 
 function WelcomeSection () {
@@ -17,6 +17,8 @@ function WelcomeSection () {
     lang,
     theme,
   } = store;
+
+  console.log(lang);
 
   return (
     <section className='welcomeSection'>

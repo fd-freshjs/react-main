@@ -1,8 +1,5 @@
 export const userState = {
-    data: {
-        firstName: null,
-        lastName: null,
-    },
+    data: null,
     isLoading: false,
     error: null,
 };
