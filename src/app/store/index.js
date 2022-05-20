@@ -1,7 +1,6 @@
-import { createContext, useContext, useReducer } from "react";
+import { useContext, useReducer } from "react";
 import globalReducer, { globalStore } from "../reducers";
-
-export const StoreContext = createContext(globalStore);
+import { StoreContext } from "../../contexts";
 
 const Store = (props) => {
     const store = useReducer(globalReducer, globalStore);

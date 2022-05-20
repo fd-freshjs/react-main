@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { UserContext, LangContext, ThemeContext } from '../../../contexts';
+import { StoreContext } from '../../../contexts';
 import { themeEnum } from '../../../enums';
 import './WelcomeSection.css';
 
@@ -10,22 +10,27 @@ const text = {
 };
 
 function WelcomeSection () {
-  // const [store, dispatch] = useContext(StoreContext);
+  const [store, dispatch] = useContext(StoreContext);
 
-  // const { user: { data }, lang, theme } = store;
-
-  const lang = useContext(LangContext);
-  const user = useContext(UserContext);
-  const [theme, nextTheme] = useContext(ThemeContext);
+  const {
+    user: { data },
+    lang,
+    theme,
+  } = store;
 
   return (
     <section className='welcomeSection'>
-        <button style ={{ backgroundColor: theme === themeEnum.DARK ? 'black' : 'white', color: theme === themeEnum.DARK ? 'white' : 'black' }} onClick={nextTheme}>
-          След тема
-        </button>
+      <button
+        style={{
+          backgroundColor: theme === themeEnum.DARK ? 'black' : 'white',
+          color: theme === themeEnum.DARK ? 'white' : 'black',
+        }}
+        onClick={() => dispatch({ group: 'theme', type: 'nextTheme' })}
+      >
+        След тема
+      </button>
 
-      <h1 className='mainHeading'>{text[lang](user)}</h1>
-
+      <h1 className='mainHeading'>{text[lang](data)}</h1>
 
       <p className='mainDescription'>
         JavaScript-библиотека для создания пользовательских интерфейсов
