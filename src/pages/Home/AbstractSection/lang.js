@@ -1,6 +1,7 @@
 import { langEnum } from '../../../enums';
 
 const dict = {
+  // локальные переводы
   [langEnum.ru]: {
     'home.abstract.subheader1': () => `Декларативный`,
     'home.abstract.text1.p1': () =>

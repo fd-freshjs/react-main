@@ -1,12 +1,8 @@
 body[theme="light"] .welcomeSection,
 body[theme="dark"] .welcomeSection {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px 30px 70px;
-  position: relative;
   min-height: 421px;
+  position: relative;
 }
 
 .welcomeSection::before {
@@ -18,6 +14,18 @@ body[theme="dark"] .welcomeSection {
   background-position: 100% 100px;
   background-size: 50%;
   opacity: 0.05;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.welcomeSectionContent {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 30px 70px;
 }
 
 body[theme="light"] .welcomeSection {

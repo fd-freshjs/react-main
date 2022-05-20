@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from 'react';
-import { StoreContext } from '../contexts';
+import { useEffect, useState } from 'react';
+import { useSelector } from '../app/store';
 import { getLocaleText } from '../locale';
 
 export const useTasks = (taskArray = []) => {
@@ -60,8 +60,7 @@ export const useFetch = (promise, initialState = {}, deps = []) => {
 };
 
 export const useTranslation = (dict) => {
-  const [store] = useContext(StoreContext);
-  const { lang } = store;
+  const lang = useSelector(store => store.lang);
 
   return (code, ctx) =>
     getLocaleText({

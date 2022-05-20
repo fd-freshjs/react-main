@@ -6,4 +6,4 @@ import { globalStore } from "../app/reducers";
 // export const ThemeContext = React.createContext(themeEnum.LIGHT);
 // export const LangContext = React.createContext(langEnum.en);
 
-export const StoreContext = React.createContext(globalStore);
+export const StoreContext = React.createContext([globalStore]);

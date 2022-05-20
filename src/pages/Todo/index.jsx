@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { StoreContext } from '../../contexts';
+import React from 'react';
+import { useDispatch, useSelector } from '../../app/store';
 import { useForm } from '../../hooks';
 
 // типа отправка данных на сервер
@@ -10,9 +10,8 @@ const send = (data) => {
 }
 
 function Todo () {
-  const [store, dispatch] = useContext(StoreContext);
-  // ячейка это обьект
-  // const [tasks, addTask, deleteTask] = useTasks([]);
+  const tasks = useSelector(store => store.tasks);
+  const dispatch = useDispatch();
 
   const [formState, onInputChange, resetField] = useForm({ task: '' });
   const onSubmit = e => {
@@ -71,13 +70,13 @@ function Todo () {
           onChange={onInputChange}
         />
         <button type='submit'>Add todo</button>
-        <span>{store.tasks.isLoading ? 'Loading' : ''}</span>
+        <span>{tasks.isLoading ? 'Loading' : ''}</span>
       </form>
 
-      <div>{store.tasks.error?.toString()}</div>
+      <div>{tasks.error?.toString()}</div>
 
       <ul>
-        {store.tasks.list.map(task => {
+        {tasks.list.map(task => {
           return (
             /* component TaskItem */
             <li key={task.id}>

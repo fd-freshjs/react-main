@@ -1,6 +1,7 @@
 import { langEnum } from '../../../enums';
 
 const dict = {
+  // локальные переводы
   [langEnum.ru]: {
     'home.welcome.header1': ({ ctx }) =>
       `Добро пожаловать, ${ctx ? ctx.firstName : 'Незнакомец'}`,

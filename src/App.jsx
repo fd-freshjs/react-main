@@ -11,8 +11,8 @@ import ProfilePage from './pages/Profile';
 import DocsPage from './pages/DocsPage';
 import UserLoader from './pages/UserLoader';
 import HooksPage from './pages/Hooks';
-import { StoreContext } from './contexts';
 import { themeEnum } from './enums';
+import { useDispatch, useSelector } from './app/store';
 const LoginPage = lazy(() => import('./pages/Login'));
 const RegisterPage = lazy(() => import('./pages/Registration'));
 const Counter = lazy(() => import('./pages/Counter'));
@@ -20,11 +20,10 @@ const Calculator = lazy(() => import('./pages/Calculator'));
 
 function App () {
   // аналоги
-  // const userState = useSelector(store => store.user);
-  // const dispatch = useDispatch();
-  const [store, dispatch] = useContext(StoreContext);
+  const userState = useSelector(store => store.user);
+  const theme = useSelector(store => store.theme);
+  const dispatch = useDispatch();
 
-  const { user: userState, theme } = store;
 
   useEffect(() => {
     document.body.setAttribute('theme', theme.toLowerCase());

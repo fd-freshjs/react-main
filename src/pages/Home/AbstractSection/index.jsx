@@ -7,8 +7,8 @@ import dict from './lang';
 
 function AbstractSection () {
   const translate = useTranslation(dict);
-  const theme = useSelector((store) => store.theme);
 
+  const theme = useSelector((store) => store.theme);
   const classes = useThemeClasses(theme, styles);
 
   return (

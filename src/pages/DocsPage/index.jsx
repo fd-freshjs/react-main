@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
-import classNames from './DocsPage.module.scss';
+import classes from './DocsPage.module.scss';
 
 function DocsPage(props) {
   return (
     <div>
-        <h1 className={classNames.docsHeading}>
+        <h1 className={classes.docsHeading}>
             Начало работы
         </h1>
         <p className="mainDescription">На этой странице мы сделаем небольшой обзор документации и других ресурсов, которые могут пригодиться при первом использовании React.</p>
@@ -14,7 +14,7 @@ function DocsPage(props) {
 
         <hr />
 
-        <ul className={cx(classNames.list, { [classNames.special]: props.verdict })}>
+        <ul className={cx(classes.list, { [classes.special]: props.verdict })}>
             <li><a href="https://ru.reactjs.org/">Пробуем React</a></li>
             <li><a href="https://ru.reactjs.org/">Изучаем React</a></li>
             <li><a href="https://ru.reactjs.org/">Информация о релизах</a></li>

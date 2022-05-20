@@ -1,0 +1,16 @@
+.calculator {
+  max-width: 300px;
+
+  .label {
+    display: flex;
+    flex-direction: column;
+    padding: 2px;
+
+    .input {
+
+      &::placeholder {
+        font-size: 0.8em;
+      }
+    }
+  }
+}
