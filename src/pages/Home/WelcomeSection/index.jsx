@@ -1,51 +1,37 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { StoreContext } from '../../../contexts';
-import { themeEnum, langEnum } from '../../../enums';
-import './WelcomeSection.css';
-
-const text = {
-  [langEnum.en]: user => `Welcome, ${user ? user.firstName : 'Stranger'}`,
-  [langEnum.ru]: user => `Добро пожаловать, ${user ? user.firstName : 'Незнакомец'}`,
-};
+import LangText from '../../../component/LangText';
+import { useTranslation } from '../../../hooks';
+import dict from './lang';
+import styles from './WelcomeSection.module.css';
 
 function WelcomeSection () {
-  const [store, dispatch] = useContext(StoreContext);
+  const [store] = useContext(StoreContext);
+  const translate = useTranslation(dict);
 
   const {
-    user: { data },
-    lang,
-    theme,
+    user: { data: user },
   } = store;
 
-  console.log(lang);
-
   return (
-    <section className='welcomeSection'>
-      <button
-        style={{
-          backgroundColor: theme === themeEnum.DARK ? 'black' : 'white',
-          color: theme === themeEnum.DARK ? 'white' : 'black',
-        }}
-        onClick={() => dispatch({ group: 'theme', type: 'nextTheme' })}
-      >
-        След тема
-      </button>
+    <section className={styles.welcomeSection}>
+      <h1 className={styles.mainHeading}>
+        {translate('home.welcome.header1', user)}
+      </h1>
 
-      <h1 className='mainHeading'>{text[lang](data)}</h1>
-
-      <p className='mainDescription'>
-        JavaScript-библиотека для создания пользовательских интерфейсов
+      <p className={styles.mainDescription}>
+        {translate('home.welcome.subheader1')}
       </p>
-      <div className='mainLinks'>
-        <Link className='linkButton' to='/docs'>
-          Начать работу
+      <div className={styles.mainLinks}>
+        <Link className={styles.linkButton} to='/docs'>
+          <LangText dict={dict} code={'home.welcome.getStartedBtn'} />
         </Link>
         <a
-          className='link'
+          className={styles.link}
           href='https://ru.reactjs.org/tutorial/tutorial.html'
         >
-          Перейти к введению {'>'}
+          {translate('home.welcome.takeTutorialLink')}
         </a>
       </div>
     </section>

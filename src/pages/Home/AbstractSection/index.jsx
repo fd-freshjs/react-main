@@ -1,15 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useTranslation } from '../../../hooks';
-import './AbstractSection.css';
+import { useSelector } from '../../../app/store';
+import { useThemeClasses, useTranslation } from '../../../hooks';
+import styles from './AbstractSection.module.css';
 import dict from './lang';
 
 function AbstractSection () {
   const translate = useTranslation(dict);
+  const theme = useSelector((store) => store.theme);
+
+  const classes = useThemeClasses(theme, styles);
 
   return (
-    <section className='abstractSection'>
-      <ul className='abstractList'>
+    <section className={classes('abstractSection')}>
+      <ul className={classes('abstractList')}>
         <li>
           <h3>{translate('home.abstract.subheader1')}</h3>
           <p>{translate('home.abstract.text1.p1')}</p>

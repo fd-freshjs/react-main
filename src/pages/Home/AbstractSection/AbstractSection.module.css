@@ -1,0 +1,27 @@
+.abstractSection,
+.abstractSection_light,
+.abstractSection_dark {
+  display: flex;
+  justify-content: center;
+}
+
+.abstractSection_light /* themeClass */ {
+  background-color: beige;
+}
+
+.abstractSection_dark /* themeClass */ {
+  background-color: rgb(60, 92, 94);
+}
+
+.abstractList {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+}
+
+.abstractList li {
+  flex-grow: 1;
+  max-width: 33%;
+  margin: 0 20px;
+}

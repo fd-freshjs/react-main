@@ -1,11 +1,10 @@
-import React, { lazy, Suspense, useContext } from 'react';
+import React, { lazy, Suspense, useContext, useEffect } from 'react';
 import { BrowserRouter, Link, Switch, Route, Redirect } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
 
-import { useDispatch, useSelector } from './app/store';
 import PrivateRoute from './component/PrivateRoute';
 
-import './App.scss';
+import classes from './App.module.scss';
 
 import HomePage from './pages/Home';
 import ProfilePage from './pages/Profile';
@@ -13,18 +12,23 @@ import DocsPage from './pages/DocsPage';
 import UserLoader from './pages/UserLoader';
 import HooksPage from './pages/Hooks';
 import { StoreContext } from './contexts';
+import { themeEnum } from './enums';
 const LoginPage = lazy(() => import('./pages/Login'));
 const RegisterPage = lazy(() => import('./pages/Registration'));
 const Counter = lazy(() => import('./pages/Counter'));
 const Calculator = lazy(() => import('./pages/Calculator'));
 
 function App () {
-  // аналоги 
+  // аналоги
   // const userState = useSelector(store => store.user);
   // const dispatch = useDispatch();
   const [store, dispatch] = useContext(StoreContext);
 
-  const { user: userState } = store;
+  const { user: userState, theme } = store;
+
+  useEffect(() => {
+    document.body.setAttribute('theme', theme.toLowerCase());
+  }, [theme]);
 
   const setUser = () => {
     dispatch({
@@ -41,10 +45,24 @@ function App () {
     });
   };
 
+  const nextTheme = () => {
+    dispatch({ group: 'theme', type: 'nextTheme' });
+  };
+
   return (
     <BrowserRouter>
       <button onClick={nextLang}>Change Lang</button>
       <button onClick={setUser}>Change User</button>
+      <button
+        className={
+          theme === themeEnum.DARK
+            ? classes.themeBtnDark
+            : classes.themeBtnLight
+        }
+        onClick={nextTheme}
+      >
+        След тема
+      </button>
 
       <header>
         <Link to='/'>

@@ -71,3 +71,57 @@ export const useTranslation = (dict) => {
       ctx: ctx,
     });
 };
+
+export const useThemeClasses = (themeName, classesMap = {}, separator = '_') => {
+  return key => {
+    const var1 = classesMap[key];
+    if (typeof var1 === 'string') {
+      const themeClass = classesMap[`${key}${separator}${themeName.toLowerCase()}`];
+      return themeClass ? themeClass : var1;
+    } else if (var1 instanceof Object) {
+      return var1[themeName];
+    }
+
+    const var2 = classesMap[themeName];
+    if (typeof var2 === 'string') {
+      return var2;
+    }else if (var2 instanceof Object) {
+      return var2[key];
+    }
+
+    return key;
+  };
+};
+
+/*
+  // var1 - string
+  const classesMap = {
+    welcomeSection: 'Welcome_welcomeSection_1g1Y24',
+    welcomeSection_light: 'Welcome_welcomeSection_light_1g1Y24',
+    welcomeSection_dark: 'Welcome_welcomeSection_dark_1g1Y24',
+  };
+
+  // var1 - object
+  const classesMap = {
+    welcomeSection: {
+      [themeEnum.DARK]: 'welcomeSectionDark',
+      [themeEnum.LIGHT]: 'welcomeSectionLight',
+    },
+  };
+
+  // var2 - object
+  const classesMap = {
+    [themeEnum.DARK]: {
+      welcomeSection: 'welcomeSectionDark',
+    },
+    [themeEnum.LIGHT]: {
+      welcomeSection: 'welcomeSectionLight',
+    },
+  };
+
+  // var2 - string
+  const classesMap = {
+    [themeEnum.DARK]: 'welcomeSectionDark',
+    [themeEnum.LIGHT]: 'welcomeSectionLight',
+  };
+*/
